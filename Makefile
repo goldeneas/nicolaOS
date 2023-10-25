@@ -6,7 +6,7 @@ ISO_NAME = image
 BUILD_PATH = ./build
 
 OS_NAME = nicolaOS
-OS_PATH = ./os/build
+OS_PATH = ./os
 
 .PHONY=iso
 iso: clean setup-iso
@@ -17,7 +17,7 @@ iso: clean setup-iso
 
 .PHONY=setup-iso
 setup-iso: compile-os
-	cp $(OS_PATH)/$(OS_NAME).elf limine.cfg $(LIMINE_PATH)/limine-bios.sys $(LIMINE_PATH)/limine-bios-cd.bin \
+	cp $(OS_PATH)/build/$(OS_NAME).elf limine.cfg $(LIMINE_PATH)/limine-bios.sys $(LIMINE_PATH)/limine-bios-cd.bin \
 		$(LIMINE_PATH)/limine-uefi-cd.bin $(BUILD_PATH)
 	mkdir -p $(BUILD_PATH)/EFI/BOOT
 	cp $(LIMINE_PATH)/BOOTX64.EFI $(BUILD_PATH)/EFI/BOOT
@@ -36,7 +36,7 @@ limine:
 	mkdir -p $(LIMINE_PATH)
 	git clone https://github.com/limine-bootloader/limine.git --branch=v5.x-branch-binary --depth=1
 	make -C limine
-	link limine/limine.h os/src/limine.h
+	link $(LIMINE_PATH)/limine.h $(OS_PATH)/src/limine.h
 
 .PHONY=clean
 clean:
