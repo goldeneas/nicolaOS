@@ -67,10 +67,6 @@ void pic_send_eoi(unsigned char irq) {
 void pic_broadcast_excp(struct interrupt_frame* f) {
 }
 
-void pic_test(struct interrupt_frame* f) {
-	kprint("here");
-}
-
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 void excp_0(struct interrupt_frame* p) {}

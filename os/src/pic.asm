@@ -52,7 +52,7 @@ isr_stub_%+%1:
 isr_common_stub:
 	pushaq
 	lea rdi, [rsp]
-	call pic_test
+	call pic_broadcast_excp
 	popaq
 	; skip err_code and int_idx
 	add rsp, 0x10
@@ -67,6 +67,7 @@ isr_stub_table:
 	%assign i  i+1
 	%endrep
 
+; This is a test stub I'm using since gp is thrown
 isr_stub_13:
 	push 13
 	pushaq
