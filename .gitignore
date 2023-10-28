@@ -53,5 +53,6 @@ dkms.conf
 
 # Other
 build/*.iso
-.DS_Store/
+.DS_Store
 .ccls-cache/
+os/src/.cache/
