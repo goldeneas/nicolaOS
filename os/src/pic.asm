@@ -20,10 +20,10 @@ extern pic_test
 %endmacro
 
 %macro popaq 0
-	push r15
-	push r14
-	push r13
-	push r12
+	pop r15
+	pop r14
+	pop r13
+	pop r12
     pop r11
     pop r10
     pop r9
