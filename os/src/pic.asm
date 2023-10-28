@@ -1,5 +1,4 @@
 extern pic_broadcast_excp
-extern pic_test
 
 %macro pushaq 0
 	cld
@@ -51,7 +50,7 @@ isr_stub_%+%1:
 
 isr_common_stub:
 	pushaq
-	lea rdi, [rsp]
+	mov rdi, rsp
 	call pic_broadcast_excp
 	popaq
 	; skip err_code and int_idx
@@ -67,18 +66,6 @@ isr_stub_table:
 	%assign i  i+1
 	%endrep
 
-; This is a test stub I'm using since gp is thrown
-isr_stub_13:
-	push 13
-	pushaq
-	mov rdi, rsp
-	call pic_broadcast_excp
-	popaq
-	; skip err_code and int_idx
-	add rsp, 0x10
-	iretq
-
-
 ; define exception handler stubs
 isr_no_err_stub 0
 isr_no_err_stub 1
@@ -93,7 +80,7 @@ isr_no_err_stub 9
 isr_err_stub	10
 isr_err_stub	11
 isr_err_stub	12
-;isr_err_stub	13
+isr_err_stub	13
 isr_err_stub	14
 isr_no_err_stub	15
 isr_no_err_stub 16
