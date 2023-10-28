@@ -12,7 +12,7 @@ OBJCOPY = x86_64-elf-objcopy
 CC = x86_64-elf-gcc
 CC_FLAGS = -ffreestanding -g -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 		   -Wcast-align -Wwrite-strings -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls \
-		   -Wnested-externs -Winline -Wno-long-long -Wconversion -Wstrict-prototypes -fPIC
+		   -Wnested-externs -Winline -Wno-long-long -Wconversion -Wstrict-prototypes -fPIC -mgeneral-regs-only -mno-red-zone
 
 LD = x86_64-elf-ld
 LD_FLAGS = -T linker.ld -m elf_x86_64 -nostdlib -z text -z max-page-size=0x1000
