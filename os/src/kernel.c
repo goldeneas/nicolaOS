@@ -36,8 +36,6 @@ void _start(void) {
 	kprint("nicolaOS - (v0.0.1)\n");
 	kprint("-------------------\n");
 	
-	kprinti(231314);
-
 	init_gdt();
 	init_idt();
 
