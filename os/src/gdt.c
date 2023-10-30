@@ -37,7 +37,7 @@ void set_gdt_entry(size_t idx, uint32_t base, uint32_t limit, uint8_t access, ui
 
 	gdt[idx].base_low = (base & 0xFFFF);
 	gdt[idx].base_mid = ((base >> 16) & 0xFF);
-	gdt[idx].base_high = (uint8_t) ((base >> 24) & 0xFF);
+	gdt[idx].base_high = ((base >> 24) & 0xFF);
 
 	gdt[idx].limit_low = (limit & 0xFFFF);
 	gdt[idx].limit_flags_mid = ((limit >> 16) & 0xF);

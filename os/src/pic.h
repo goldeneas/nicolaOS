@@ -13,14 +13,6 @@ void pic_send_eoi(unsigned char irq);
 void pic_remap(uint8_t master_offset, uint8_t slave_offset);
 void pic_broadcast_excp(struct interrupt_frame* f);
 
-static inline void pic_unmask_interrupts(void) {
-	asm volatile("sti");
-}
-
-static inline void pic_mask_interrupts(void) {
-	asm volatile("cli");
-}
-
 void excp_0(struct interrupt_frame* p);
 void excp_1(struct interrupt_frame* p);
 void excp_2(struct interrupt_frame* p);

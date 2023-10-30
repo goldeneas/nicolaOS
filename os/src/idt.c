@@ -13,14 +13,13 @@ void init_idt(void) {
 	kprint("[IDT] Inizializzazione\n");
 
 	pic_remap(0x20, 0x28);
-	idt_d.size = sizeof(idt) - 1;
+	idt_d.size = (uint16_t) sizeof(idt) - 1;
 	idt_d.offset = (uint64_t) &idt;
 
 	for(size_t i = 0; i < 32; i++)
 		set_idt_gate(i, (uint64_t) isr_stub_table[i], 0x8, 0x0, 0x8E);
 
 	load_idt();
-	pic_unmask_interrupts();
 	kprint("[IDT] Inizializzato\n");
 }
 
