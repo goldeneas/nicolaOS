@@ -35,6 +35,8 @@ void _start(void) {
 	init_io(framebuffer);
 	kprint("nicolaOS - (v0.0.1)\n");
 	kprint("-------------------\n");
+	
+	kprinti(231314);
 
 	init_gdt();
 	init_idt();

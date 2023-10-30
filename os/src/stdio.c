@@ -32,10 +32,6 @@ bool is_io_initialized(void) {
 	return is_initialized;
 }
 
-void put_char(uint32_t c) {
-	ssfn_putc(c);
-}
-
 void kprint(const char* s) {
 	size_t lenght = strlen(s);
 
@@ -46,6 +42,23 @@ void kprint(const char* s) {
 			continue;
 		}
 
-		put_char((uint32_t) s[i]);
+		ssfn_putc((uint32_t) s[i]);
+	}
+}
+
+void kprinti(uint32_t n) {
+	int i = 0;
+	int temp = n;
+	int digits[10];
+
+	while(temp) {
+		digits[i] = temp % 10;
+		temp /= 10;
+		i++;
+	}
+
+	for(int j = (i - 1); j >= 0; j--) {
+		uint32_t num_char = digits[j] + '0';
+		ssfn_putc((uint32_t) num_char);
 	}
 }

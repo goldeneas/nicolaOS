@@ -77,20 +77,20 @@ void excp_4(struct interrupt_frame* p) {}
 void excp_5(struct interrupt_frame* p) {}
 void excp_6(struct interrupt_frame* p) {}
 void excp_7(struct interrupt_frame* p) {}
-void excp_8(struct interrupt_frame* p, unsigned long err_code) {}
+void excp_8(struct interrupt_frame* p) {}
 void excp_9(struct interrupt_frame* p) {}
-void excp_10(struct interrupt_frame* p, unsigned long err_code) {}
-void excp_11(struct interrupt_frame* p, unsigned long err_code) {}
-void excp_12(struct interrupt_frame* p, unsigned long err_code) {}
-void excp_13(struct interrupt_frame* p, unsigned long err_code) {}
-void excp_14(struct interrupt_frame* p, unsigned long err_code) {}
+void excp_10(struct interrupt_frame* p) {}
+void excp_11(struct interrupt_frame* p) {}
+void excp_12(struct interrupt_frame* p) {}
+void excp_13(struct interrupt_frame* p) {}
+void excp_14(struct interrupt_frame* p) {}
 void excp_15(struct interrupt_frame* p) {}
 void excp_16(struct interrupt_frame* p) {}
-void excp_17(struct interrupt_frame* p, unsigned long err_code) {}
+void excp_17(struct interrupt_frame* p) {}
 void excp_18(struct interrupt_frame* p) {}
 void excp_19(struct interrupt_frame* p) {}
 void excp_20(struct interrupt_frame* p) {}
-void excp_21(struct interrupt_frame* p, unsigned long err_code) {}
+void excp_21(struct interrupt_frame* p) {}
 void excp_22(struct interrupt_frame* p) {}
 void excp_23(struct interrupt_frame* p) {}
 void excp_24(struct interrupt_frame* p) {}
@@ -98,7 +98,7 @@ void excp_25(struct interrupt_frame* p) {}
 void excp_26(struct interrupt_frame* p) {}
 void excp_27(struct interrupt_frame* p) {}
 void excp_28(struct interrupt_frame* p) {}
-void excp_29(struct interrupt_frame* p, unsigned long err_code) {}
-void excp_30(struct interrupt_frame* p, unsigned long err_code) {}
+void excp_29(struct interrupt_frame* p) {}
+void excp_30(struct interrupt_frame* p) {}
 void excp_31(struct interrupt_frame* p) {}
 #pragma GCC diagnostic pop

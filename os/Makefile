@@ -12,13 +12,15 @@ OBJCOPY = x86_64-elf-objcopy
 CC = x86_64-elf-gcc
 CC_FLAGS = -ffreestanding -g -Wall -Wextra -pedantic -Wshadow -Wpointer-arith \
 		   -Wcast-align -Wwrite-strings -Wmissing-prototypes -Wmissing-declarations -Wredundant-decls \
-		   -Wnested-externs -Winline -Wno-long-long -Wconversion -Wstrict-prototypes -fPIC -mgeneral-regs-only -mno-red-zone
+		   -Wnested-externs -Winline -Wno-long-long -Wconversion -Wstrict-prototypes -fPIE -mgeneral-regs-only \
+		   -mno-red-zone -march=x86-64 -m64 -fno-stack-protector -fno-stack-check -fno-lto 
 
 LD = x86_64-elf-ld
-LD_FLAGS = -T linker.ld -m elf_x86_64 -nostdlib -z text -z max-page-size=0x1000
+LD_FLAGS = -T linker.ld -m elf_x86_64 -nostdlib -z text -z max-page-size=0x1000 -PIE -static \
+		   -m elf_x86_64 -nostdlib --no-dynamic-linker
 
 NASM = nasm
-NASM_FLAGS = -f elf64
+NASM_FLAGS = -Wall -f elf64
 
 # FILES
 SRC_FILES := $(shell cd $(SRC_PATH) && find -L * -type f -name '*.c')
