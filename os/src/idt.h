@@ -1,6 +1,7 @@
 #pragma once
 #include <stddef.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 struct idt_gate {
 	uint16_t offset_low;
@@ -17,5 +18,5 @@ struct idt_descriptor {
 	uint64_t offset;
 } __attribute__ ((packed));
 
-void init_idt(void);
+bool init_idt(void);
 void set_idt_gate(size_t idx, uint64_t offset, uint16_t segment_selector, uint8_t ist, uint8_t type_attributes); 

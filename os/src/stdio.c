@@ -3,16 +3,21 @@
 #include <stddef.h>
 #include "ssfn.h"
 #include "string.h"
+#include "stdlib.h"
+
+static volatile struct limine_framebuffer_request framebuffer_request = {
+			.id = LIMINE_FRAMEBUFFER_REQUEST,
+			.revision = 0
+};
 
 // this symbol's name will change depending on the font's name!
 extern char _binary___fonts_unifont_sfn_start;
 
-bool is_initialized = false;
-
-void init_io(struct limine_framebuffer* framebuffer) {
-	if(is_initialized) {
-		kprint("Tried initializing stdio twice!");
-		return;
+bool init_io() {
+	struct limine_framebuffer* framebuffer = framebuffer_request.response->framebuffers[0];
+	if(framebuffer_request.response == NULL
+			|| framebuffer_request.response->framebuffer_count < 1) {
+		abort();
 	}
 
 	ssfn_src = (ssfn_font_t*) &_binary___fonts_unifont_sfn_start;
@@ -25,11 +30,7 @@ void init_io(struct limine_framebuffer* framebuffer) {
 	ssfn_dst.x = 20;
 	ssfn_dst.y = 40;
 
-	is_initialized = true;
-}
-
-bool is_io_initialized(void) {
-	return is_initialized;
+	return true;
 }
 
 void kprint(const char* s) {
@@ -46,7 +47,7 @@ void kprint(const char* s) {
 	}
 }
 
-void kprinti(uint32_t n) {
+void kprinti(int n) {
 	int i = 0;
 	int temp = n;
 	int digits[10];
@@ -58,7 +59,7 @@ void kprinti(uint32_t n) {
 	}
 
 	for(int j = (i - 1); j >= 0; j--) {
-		uint32_t num_char = digits[j] + '0';
+		int num_char = digits[j] + '0';
 		ssfn_putc((uint32_t) num_char);
 	}
 }

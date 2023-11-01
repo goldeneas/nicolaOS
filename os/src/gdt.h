@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 struct gdt_entry {
 	uint16_t limit_low;
@@ -15,6 +16,5 @@ struct gdt_descriptor {
 	uint16_t size;
 	uint64_t offset;
 } __attribute__((packed));
-
-void init_gdt(void);
+bool init_gdt(void);
 void set_gdt_entry(size_t idx, uint32_t base, uint32_t limit, uint8_t access, uint8_t flags);
