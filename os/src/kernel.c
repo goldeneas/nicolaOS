@@ -21,5 +21,11 @@ void _start(void) {
 		kprint("Succesfully setup IDT\n");
 
 	kprint("--- nicolaOS v0.0.1 ---");
+
+	// TODO: might not be working
+	kfree(0x1000, 10);
+
+	kprint("hi");
+
 	abort();
 }
