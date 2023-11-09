@@ -23,7 +23,10 @@ void _start(void) {
 	kprint("--- nicolaOS v0.0.1 ---");
 
 	// TODO: might not be working
-	kfree(0x1000, 10);
+	uint64_t a = kmalloc(2);
+	uint64_t b = kmalloc(2);
+
+	//kfree(a);
 
 	kprint("hi");
 
