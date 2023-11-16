@@ -13,7 +13,7 @@ static volatile struct limine_framebuffer_request framebuffer_request = {
 // this symbol's name will change depending on the font's name!
 extern char _binary___fonts_unifont_sfn_start;
 
-bool init_io() {
+bool init_io(void) {
 	struct limine_framebuffer* framebuffer = framebuffer_request.response->framebuffers[0];
 	if(framebuffer_request.response == NULL
 			|| framebuffer_request.response->framebuffer_count < 1) {

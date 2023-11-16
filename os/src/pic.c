@@ -78,15 +78,9 @@ void pic_broadcast_excp(struct interrupt_frame* f) {
 }
 
 void excp_13(struct interrupt_frame* f) {
-	kprint("[ERROR] General Protection Fault was thrown!\n");
-	kprint("[ERROR] Bravo Six, going dark.");
-
-	abort();
+	kpanic("General Protection Fault was thrown!");
 }
 
 void excp_14(struct interrupt_frame* f) {
-	kprint("[ERROR] Page Fault was thrown!\n");
-	kprint("[ERROR] Bravo Six, going dark.");
-
-	abort();
+	kpanic("Page Fault was thrown!");
 }

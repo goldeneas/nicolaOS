@@ -1,7 +1,9 @@
 #include "kernel.h"
 #include <stddef.h>
+#include <stdbool.h>
 #include "limine.h"
 #include "stdlib.h"
+#include "memory.h"
 #include "stdio.h"
 #include "draw.h"
 #include "gdt.h"
@@ -20,7 +22,7 @@ void _start(void) {
 	if(init_idt())
 		kprint("Succesfully setup IDT\n");
 
-	kprint("--- nicolaOS v0.0.1 ---");
+	kprint("--- nicolaOS v0.0.1 ---\n");
 
 	// TODO: might not be working
 	uint64_t a = kmalloc(2);
