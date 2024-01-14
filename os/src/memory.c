@@ -52,14 +52,13 @@ uint64_t kmalloc(size_t size) {
 
 	// we set next block to 0x0 because we're at the last current allocated block;
 	// we'll have to set this property once a new block is allocated
-	// TODO: maybe make this a null ptr instead, till it's changed
 	struct block_descriptor current_descriptor = make_block_descriptor('U', NULL_BLOCK);
 	kprinti(current_descriptor.state);
 	kprint("\n");
 	kprinti(current_descriptor.a);
 	set_block_descriptor(current_block_begin, current_descriptor);
 
-	// set previous block "next-address"
+	// set previous block's "next-block"
 	if(youngest_block != NULL_BLOCK) {
 		unsigned char previous_state = get_descriptor_state(youngest_block);
 		struct block_descriptor previous_descriptor = make_block_descriptor(previous_state, current_block_begin);
@@ -84,7 +83,7 @@ void kfree(uint64_t base) {
 
 	// we subtract one because we want to modify the byte that's before the
 	// address that the user will tell us
-	unsigned char* p = (unsigned char*) (base - 1);
+	unsigned char* p = (unsigned char*) (base - sizeof(struct block_descriptor));
 	p[0] = 'F';
 }
 

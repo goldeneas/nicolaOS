@@ -21,7 +21,7 @@ void _start(void) {
 	uint64_t a = kmalloc(2);
 	uint64_t b = kmalloc(2);
 
-	//kfree(a);
+	kfree(a);
 
 	kprint("hi");
 

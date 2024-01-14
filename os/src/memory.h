@@ -3,6 +3,8 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+// TODO: maybe using a block_descriptor* instead of a->h might work as well
+// and reduce complexity
 struct block_descriptor {
 	// current state of our memory block
 	// U -> IN-USE; F -> FREED
