@@ -4,4 +4,5 @@
 
 bool init_io(void);
 void kprint(const char* s);
+void kprintok(const char* s);
 void kprinti(int n);

@@ -3,16 +3,18 @@
 #include "stdio.h"
 #include "string.h"
 
+#define NULL_BLOCK 0x0
 #define MEM_BASE 0x1000
 #define MEM_LIMIT 0xFFFFF
 
-uint64_t youngest_block = 0x0;
+uint64_t youngest_block = NULL_BLOCK;
 uint64_t free_section = MEM_BASE;
 
 static unsigned char get_descriptor_state(uint64_t src) {
 	unsigned char* srcp = (unsigned char*) src;
 	return srcp[0];
 }
+
 static void set_block_descriptor(uint64_t dest, struct block_descriptor bds) {
 	unsigned char* destp = (unsigned char*) dest;
 	destp[0] = bds.state;
@@ -46,21 +48,27 @@ static struct block_descriptor make_block_descriptor(unsigned char state, uint64
 }
 
 uint64_t kmalloc(size_t size) {
-	uint64_t current_block = free_section;
+	uint64_t current_block_begin = free_section;
 
 	// we set next block to 0x0 because we're at the last current allocated block;
 	// we'll have to set this property once a new block is allocated
-	struct block_descriptor current_descriptor = make_block_descriptor('U', 0x0); 
-	set_block_descriptor(current_block, current_descriptor);
+	// TODO: maybe make this a null ptr instead, till it's changed
+	struct block_descriptor current_descriptor = make_block_descriptor('U', NULL_BLOCK);
+	kprinti(current_descriptor.state);
+	kprint("\n");
+	kprinti(current_descriptor.a);
+	set_block_descriptor(current_block_begin, current_descriptor);
 
 	// set previous block "next-address"
-	unsigned char previous_state = get_descriptor_state(youngest_block);
-	struct block_descriptor previous_descriptor = make_block_descriptor(previous_state, current_block);
-	set_block_descriptor(youngest_block, previous_descriptor);
+	if(youngest_block != NULL_BLOCK) {
+		unsigned char previous_state = get_descriptor_state(youngest_block);
+		struct block_descriptor previous_descriptor = make_block_descriptor(previous_state, current_block_begin);
+		set_block_descriptor(youngest_block, previous_descriptor);
+	}
 
-	uint64_t usable_memory = current_block + sizeof(struct block_descriptor);
+	uint64_t usable_memory = current_block_begin + sizeof(struct block_descriptor);
 	free_section = usable_memory + size;
-	youngest_block = current_block;
+	youngest_block = current_block_begin;
 
 	if(free_section >= (MEM_BASE + MEM_LIMIT))
 		kpanic("Exceeded maximum heap memory!");

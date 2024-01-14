@@ -48,6 +48,13 @@ void kprint(const char* s) {
 }
 
 void kprinti(int n) {
+	// TODO: kinda ugly
+	// 0 will not be printed because the while loop doesn't even begin
+	if(n == 0) {
+		kprint("0");
+		return;
+	}
+
 	int i = 0;
 	int temp = n;
 	int digits[10];
@@ -62,4 +69,9 @@ void kprinti(int n) {
 		int num_char = digits[j] + '0';
 		ssfn_putc((uint32_t) num_char);
 	}
+}
+
+void kprintok(const char* s) {
+	kprint("[OK] ");
+	kprint(s);
 }

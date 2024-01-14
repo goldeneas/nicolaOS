@@ -25,8 +25,6 @@
 #define EOI 0x20
 
 void pic_remap(uint8_t master_offset, uint8_t slave_offset) {
-	kprint("Starting PIC remap...\n");
-
 	unsigned char master_masks, slave_masks;
 
 	master_masks = inb(PIC1_DATA);
@@ -55,7 +53,7 @@ void pic_remap(uint8_t master_offset, uint8_t slave_offset) {
 	outb(PIC1_DATA, master_masks);
 	outb(PIC2_DATA, slave_masks);
 
-	kprint("Succesfully remapped PIC\n");
+	kprintok("Succesfully remapped PIC\n");
 }
 
 void pic_send_eoi(unsigned char irq) {

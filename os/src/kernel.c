@@ -10,17 +10,10 @@
 #include "idt.h"
 
 void _start(void) {
-	if(init_io())
-		kprint("Succesfully initialized I/O\n");
-
-	if(init_mem())
-		kprint("Succesfully initialized memory\n");
-
-	if(init_gdt())
-		kprint("Succesfully setup GDT\n");
-
-	if(init_idt())
-		kprint("Succesfully setup IDT\n");
+	if(init_io()) kprintok("Succesfully initialized I/O\n");
+	if(init_mem()) kprintok("Succesfully initialized memory\n");
+	if(init_gdt()) kprintok("Succesfully setup GDT\n");
+	if(init_idt()) kprintok("Succesfully setup IDT\n");
 
 	kprint("--- nicolaOS v0.0.1 ---\n");
 
