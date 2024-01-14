@@ -23,5 +23,5 @@ struct block_descriptor {
 };
 
 bool init_mem(void);
-void kfree(uint64_t base);
-uint64_t kmalloc(size_t size);
+void kfree(void* base);
+void* kmalloc(size_t size);

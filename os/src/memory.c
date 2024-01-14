@@ -52,7 +52,7 @@ static struct block_descriptor make_block_descriptor(unsigned char state, uint64
 	return bds;
 }
 
-uint64_t kmalloc(size_t size) {
+void* kmalloc(size_t size) {
 	uint64_t current_block_begin = free_section;
 
 	// when calling make_block_descriptor on a new block, we pass a NULL_BLOCK as a next_block parameter.
@@ -61,9 +61,6 @@ uint64_t kmalloc(size_t size) {
 	// this means that when creating e.g. block C, we have to change the next_address for block B
 	// to be block C's base block address.
 	struct block_descriptor current_descriptor = make_block_descriptor('U', NULL_BLOCK);
-	kprinti(current_descriptor.state);
-	kprint("\n");
-	kprinti(current_descriptor.a);
 	set_block_descriptor(current_block_begin, current_descriptor);
 
 	// here we set our previous block property as stated in the previous comment.
@@ -84,12 +81,16 @@ uint64_t kmalloc(size_t size) {
 	if(free_section >= (MEM_BASE + MEM_LIMIT))
 		kpanic("Exceeded maximum heap memory!");
 
-	return usable_memory;
+	return (void*)usable_memory;
 }
 
-void kfree(uint64_t base) {
+void kfree(void* base) {
+	// TODO: test void* cast to uint64_t
 	if(base < MEM_BASE || base > (MEM_BASE + MEM_LIMIT)) {
-		kprint("Tried freeing an address out of bounds!");
+		kprint("\nTried freeing an address out of bounds!");
+		kprint("\nAddress was: ");
+		kprinti((uint64_t) base);
+		kprint("\n");
 		return;
 	}
 
