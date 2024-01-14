@@ -3,6 +3,11 @@
 #include "stdio.h"
 #include "string.h"
 
+/*
+ *	BASE BLOCK ADDRESS = beginning of a block INCLUDING its block descriptor
+ *	USABLE MEMORY ADDRESS = beginning of a block EXCLUDING its block descriptor
+ */
+
 #define NULL_BLOCK 0x0
 #define MEM_BASE 0x1000
 #define MEM_LIMIT 0xFFFFF
@@ -50,21 +55,28 @@ static struct block_descriptor make_block_descriptor(unsigned char state, uint64
 uint64_t kmalloc(size_t size) {
 	uint64_t current_block_begin = free_section;
 
-	// we set next block to 0x0 because we're at the last current allocated block;
-	// we'll have to set this property once a new block is allocated
+	// when calling make_block_descriptor on a new block, we pass a NULL_BLOCK as a next_block parameter.
+	// this is because we don't know if there will ever be a new block of memory, since we assume that
+	// the one we're creating is the youngest one.
+	// this means that when creating e.g. block C, we have to change the next_address for block B
+	// to be block C's base block address.
 	struct block_descriptor current_descriptor = make_block_descriptor('U', NULL_BLOCK);
 	kprinti(current_descriptor.state);
 	kprint("\n");
 	kprinti(current_descriptor.a);
 	set_block_descriptor(current_block_begin, current_descriptor);
 
-	// set previous block's "next-block"
+	// here we set our previous block property as stated in the previous comment.
+	// however this is only done if THERE IS a previous block to be changed, otherwise
+	// a page fault could be thrown.
 	if(youngest_block != NULL_BLOCK) {
 		unsigned char previous_state = get_descriptor_state(youngest_block);
 		struct block_descriptor previous_descriptor = make_block_descriptor(previous_state, current_block_begin);
 		set_block_descriptor(youngest_block, previous_descriptor);
 	}
 
+	// we need to convert our base block address to an usable memory address for the user
+	// this is simply done by adding the size of the descriptor and then returning it
 	uint64_t usable_memory = current_block_begin + sizeof(struct block_descriptor);
 	free_section = usable_memory + size;
 	youngest_block = current_block_begin;
@@ -81,8 +93,8 @@ void kfree(uint64_t base) {
 		return;
 	}
 
-	// we subtract one because we want to modify the byte that's before the
-	// address that the user will tell us
+	// we need to convert our "usable address" to get the base address of the block
+	// in order to change its state
 	unsigned char* p = (unsigned char*) (base - sizeof(struct block_descriptor));
 	p[0] = 'F';
 }
