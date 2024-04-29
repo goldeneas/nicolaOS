@@ -1,11 +1,8 @@
 #include "kernel.h"
-#include <stddef.h>
 #include <stdbool.h>
-#include "limine.h"
 #include "stdlib.h"
 #include "memory.h"
 #include "stdio.h"
-#include "draw.h"
 #include "gdt.h"
 #include "idt.h"
 
@@ -17,19 +14,9 @@ void _start(void) {
 
 	kprint("--- nicolaOS v0.0.1 ---\n");
 
-	// TODO: might not be working
-	struct block_descriptor* a = (struct block_descriptor*) kmalloc(sizeof(struct block_descriptor));
-	uint64_t* b = kmalloc(2);
-
-	a->state = 'F';
-	a->f = 300;
-	kprinti(a->state);
-	kprint("\n");
-	kprinti(a->f);
-
+	uint64_t* a = kmalloc(2);
 	kfree(a);
 
 	kprint("hi");
-
 	abort();
 }

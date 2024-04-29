@@ -85,8 +85,7 @@ void* kmalloc(size_t size) {
 }
 
 void kfree(void* base) {
-	// TODO: test void* cast to uint64_t
-	if(base < MEM_BASE || base > (MEM_BASE + MEM_LIMIT)) {
+	if((uint64_t)base < MEM_BASE || (uint64_t)base > (MEM_BASE + MEM_LIMIT)) {
 		kprint("\nTried freeing an address out of bounds!");
 		kprint("\nAddress was: ");
 		kprinti((uint64_t) base);
